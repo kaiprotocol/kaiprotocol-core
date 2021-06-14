@@ -33,6 +33,7 @@ contract TreasuryStorage is TreasuryAdminStorage {
     uint256 public constant PERIOD = 8 hours;
 
     /* ========== STATE VARIABLES ========== */
+    bool public initialized;
 
     // round
     uint256 public startTime;

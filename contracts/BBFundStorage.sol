@@ -28,6 +28,7 @@ contract BBFundStorage is BBFundAdminStorage {
     uint256 public constant DAY = 86400;
 
     // flags
+    bool public initialized;
     bool public publicAllowed;
 
     // price

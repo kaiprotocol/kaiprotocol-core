@@ -53,6 +53,8 @@ contract BBFundImpl is BBFundStorage {
         address _klayswapFactory,
         address _treasury
     ) public onlyAdmin {
+        require(initialized == false, "already initiallized");
+
         kai = _kai;
         bkai = _bkai;
         skai = _skai;
@@ -68,6 +70,8 @@ contract BBFundImpl is BBFundStorage {
         maxAmountToTrade[kai] = 10000 ether;
         maxAmountToTrade[usdt] = 10000 ether;
         maxAmountToTrade[address(0)] = 10000 ether;
+
+        initialized = true;
 
         emit Initialized(msg.sender, block.number);
     }

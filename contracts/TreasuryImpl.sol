@@ -165,6 +165,8 @@ contract TreasuryImpl is TreasuryStorage {
         address _skai,
         uint256 _startTime
     ) external onlyAdmin {
+        require(initialized == false, "already initiallized");
+
         kai = _kai;
         bkai = _bkai;
         skai = _skai;
@@ -195,6 +197,8 @@ contract TreasuryImpl is TreasuryStorage {
 
         // set seigniorageSaved to it's balance
         seigniorageSaved = IERC20(kai).balanceOf(address(this));
+
+        initialized = true;
 
         emit Initialized(msg.sender, block.number);
     }
