@@ -60,6 +60,7 @@ contract Boardroom is sKAIWrapper, ContractGuard, Operator {
     }
 
     /* ========== STATE VARIABLES ========== */
+    bool public initialized;
 
     IERC20 public kai;
     ITreasury public treasury;
@@ -109,9 +110,13 @@ contract Boardroom is sKAIWrapper, ContractGuard, Operator {
         IERC20 _skai,
         ITreasury _treasury
     ) public onlyOperator {
+        require(initialized == false, "already initiallized");
+
         kai = _kai;
         skai = _skai;
         treasury = _treasury;
+
+        initialized = true;
 
         emit Initialized(msg.sender, block.number);
     }
