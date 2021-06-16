@@ -33,6 +33,8 @@ contract TreasuryImpl is TreasuryStorage {
     event TreasuryFunded(uint256 timestamp, uint256 seigniorage);
     event BoardroomFunded(uint256 timestamp, uint256 seigniorage);
     event TeamFundFunded(uint256 timestamp, uint256 seigniorage);
+    event BuyBackFunded(uint256 timestamp, uint256 seigniorage);
+    event BuyBackBurnedKAI(uint256 timestamp, uint256 kaiAmount);
 
     /* =================== Admin Functions =================== */
     function _become(TreasuryUni uni) public {
@@ -413,6 +415,7 @@ contract TreasuryImpl is TreasuryStorage {
             uint256 _savedForBuyBackFund = kaiSupply.mul(_buyBackRate).div(1e18);
             if (_savedForBuyBackFund > 0) {
                 IKAIAsset(kai).mint(address(buyBackFund), _savedForBuyBackFund);
+                emit BuyBackFunded(now, _savedForBuyBackFund);
             }
         }
         if (allocateSeigniorageSalary > 0) {
@@ -432,6 +435,7 @@ contract TreasuryImpl is TreasuryStorage {
         require(_amount > 0, "Treasury: cannot burn kai with zero amount");
         IKAIAsset(kai).burnFrom(address(buyBackFund), _amount);
         burnKAIAmount = burnKAIAmount.add(_amount);
+        emit BuyBackBurnedKAI(now, _amount);
     }
 
      /* ========== BOARDROOM CONTROLLING FUNCTIONS ========== */
